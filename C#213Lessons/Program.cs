@@ -22,30 +22,7 @@ double res = num1 * num2;
 WriteLine($"Result is: {res}");
 */
 
-
-//int[,,] arr = { { { 1, 2 }, { 3, 4 } }, { { 4, 5 }, { 6, 7 } }, { { 7, 8 }, { 9, 10 } }, { { 10, 11 },  { 12, 13 } } };
-////Write("{");
-//for (int i = 0; i < arr.GetLength(0); i++) 
-//{
-//    if (i > 0) Write("{");
-//    for (int j = 0; j < arr.GetLength(1); j++) 
-//    {
-//        if (i % 2 == 1)Write("{");
-//        for (int k = 0; k < arr.GetLength(2); k++) 
-//        {
-//            Write(arr[i, j, k]);
-//        }
-//        for (int l = 0; l < arr.GetLength(1); l++)
-//        {
-//            if (i % 2 == 5) { Write("{"); }
-//        }
-//        //Write("}");
-//    }
-//    //if (i % 2 == 1) Write("}");
-//}
-////Write("}");{{{1,2},{3,4}},
-//              //{{{4,5},{6,7}},{{7,8},{9,10}},{{10,11},{12,13}}};
-
+//HomeWork
 int[,,] arr = { { { 1, 2 }, { 3, 4 } }, { { 4, 5 }, { 6, 7 } }, { { 7, 8 }, { 9, 10 } }, { { 10, 11 }, { 12, 13 } } };
 
 string symbol = "{";
