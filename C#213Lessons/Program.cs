@@ -6,23 +6,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Drawing;
+using System.ComponentModel.DataAnnotations;
 /*
 WriteLine("Eter two numbers between 0 and 10 inclusive.\n");
 double num1; double num2;
 for (; ; ) 
 {
-    Write("Enter the first number: ");
-    Write("Enter the second number: ");
-    if (double.TryParse(ReadLine(), out num1) && double.TryParse(ReadLine(), out num2)
-        && num1 >= 0 && num1 <= 10 && num2 >= 0 && num2 <= 10)
-    {
-        break;
-    }
-    else
-    {
-        WriteLine("Error! Enter numbers between 0 and 10!");
-    }
+Write("Enter the first number: ");
+Write("Enter the second number: ");
+if (double.TryParse(ReadLine(), out num1) && double.TryParse(ReadLine(), out num2)
+&& num1 >= 0 && num1 <= 10 && num2 >= 0 && num2 <= 10)
+{
+break;
+}
+else
+{
+WriteLine("Error! Enter numbers between 0 and 10!");
+}
 }
 double res = num1 * num2;
 WriteLine($"Result is: {res}");
@@ -241,45 +242,156 @@ int res = op switch
     3 => WriteLine("3"),
 };
 */
-
-
-namespace ConsoleApp27
+/*
+public struct Human
 {
-    internal class Human : Company
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public int Age { get; set; }
+    public Human(string name, string surname, int age)
     {
-        public string name;
-        public int age;
-        public Company company;
-        public Human()
-        {
-            name = "undefined";
-            age = 0;
-            company = new Company();
-        }
-        public void Deconstruct(out string humanName, out int humanAge, out Company humanCompany)
-        {
-            humanName = name;
-            humanAge = age;
-            humanCompany = company;
-        }
-        public void Print() => Write($"Имя: {name} Возраст:{age} Компания: {company.title}");
+        Name = name;
+        Surname = surname;
+        Age = age;
     }
-    class Company
+}
+class Program
+{
+    static void Main(string[] args)
     {
-        public string title = "Unknow";
-        public override string ToString()
+        Human person = new Human();
+        person.Name = "1";
+        person.Surname = "2";
+        person.Age = 25;
+        WriteLine("Name: " + person.Name);
+        WriteLine("Surname: " + person.Surname);
+        WriteLine("Age: " + person.Age);
+    }
+}
+*/
+/*
+using Base.HumanTypes;
+using Base.OrganisationTypes;
+Company azure = new("Azure");
+Human tom = new("Tom", azure);
+tom.Print();
+namespace Base
+{
+    namespace HumanTypes
+    {
+        class Human
         {
-            return title;
+            string name;
+            OrganisationTypes.Company company;
+            public Human(string name, OrganisationTypes.Company company)
+            {
+                this.name = name;
+                this.company = company;
+            }
+            public void Print()
+            {
+                Console.WriteLine($"Имя: {name}");
+                company.Print();
+            }
         }
     }
-    class Program
+    namespace OrganisationTypes
     {
-        static void Main(string[] args)
+        class Company
         {
-            Human ted = new Human { name = "Ted", age = 34, company = { title = "Azure" } };
-            (string name, int age, Company company) = ted;
-            WriteLine($"{name} {age} {company}");
-            ted.Print();
+            string title;
+            public Company(string title) => this.title = title;
+            public void Print() => Console.WriteLine($"Название компании: {title}");
         }
+    }
+}
+*/
+
+//Human human = new Human();
+//human.Name = "Ted";
+//human.Age = 130;
+//string humanName = human.Name;
+//int humanAge = human.Age;
+Human human = new Human("Ted", "Smith", 23);
+WriteLine(human.Age);
+human.Age = 35;
+WriteLine(human.Age);
+human.Age = -35;
+WriteLine(human.Age);
+//string humanName = human.Name;
+WriteLine(human.Name);
+
+string status = Human.Pension(human.Age);
+WriteLine($"{human.Age} {status}");
+human.Age = 65;
+string status2 = Human.Pension(human.Age);
+WriteLine($"{human.Age} {status2}");
+//human.Name = "Ted";
+class Human
+{
+    private string firstName;
+    private string lastName;
+    private int age;
+    public static int pensionAge = 65;
+    public Human(string firstName, string lastName, int age)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
+    public static string Pension(int age)
+    {
+        if (age >= pensionAge) return "Пенсионер!";
+        else return $"Не пенсионер! До пенсии осталось {pensionAge - age}!";
+    }
+    public int Age
+    {
+        get { return age; }
+        set
+        {
+            if (value < 0) WriteLine("Возраст не может быть меньше 0");
+            else if (value > 100) WriteLine("Возраст не может быть больше 100");
+            else age = value;
+        }
+    }
+    public string Name
+    {
+        get { return $"{firstName}, {lastName}"; }//get=>$"{firstName}, {lastName}}"
+        init 
+        {
+            firstName = "Undefined";
+            lastName = "Undefined";
+        }
+    }
+}
+//required -- обязательные поля для заполнения.
+
+
+class Calculator 
+{
+    public void Add(int a, int b) 
+    {
+        int res = a + b;
+        WriteLine(res);
+    }
+    public void Add(int a, int b, int c) 
+    {
+        int res = a + b + c;
+        WriteLine(res);
+    }
+    public void Add(double a, double b, double c)
+    {
+        double res = a + b + c;
+        WriteLine(res);
+    }
+    public void Increment(ref int val)
+    {
+        val++;
+        WriteLine(val);
+    }
+    public void Increment(int val)
+    {
+        val++;
+        WriteLine(val);
     }
 }
