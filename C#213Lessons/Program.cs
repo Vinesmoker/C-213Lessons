@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
+
 /*
 WriteLine("Eter two numbers between 0 and 10 inclusive.\n");
 double num1; double num2;
@@ -306,7 +308,7 @@ namespace Base
     }
 }
 */
-
+/*
 //Human human = new Human();
 //human.Name = "Ted";
 //human.Age = 130;
@@ -364,7 +366,17 @@ class Human
         }
     }
 }
+*/
 //required -- обязательные поля для заполнения.
+/*
+Human2 ted = new Human2("Ted", 35);
+string json = JsonConvert.SerializeObject(ted);
+WriteLine(json);
+
+Human3 ted3 = new Human3("Ted");
+//ted3.name = "Ted";
+ted3.Print();
+WriteLine(Human3.type);
 
 
 class Calculator 
@@ -394,4 +406,86 @@ class Calculator
         val++;
         WriteLine(val);
     }
+}
+/*
+WriteLine(Operators.Add(4, 5));
+Human1 human1 = new Human1();
+human1.Print();
+*/
+/*
+class Human1 
+{
+    private static int retirementAge;
+    static int RetirementAge => retirementAge;
+    static Human1()
+    {
+        if (DateTime.Now.Year == 2020)
+            retirementAge = 65;
+        else
+            retirementAge = 67;
+    }
+    public void Print() 
+    { WriteLine(RetirementAge); }
+}
+class Human2 
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public Human2(string name, int age) 
+    {
+        Name = name;
+        Age = age;
+    }
+}
+class Human3 
+{
+    public const string type = "Human3";
+    public readonly string name = "Undefined";
+    public Human3(string name) 
+    {
+        this.name = name;
+    }
+    public void Print() => WriteLine($"{type},{name}");
+}
+readonly struct Human4
+{
+    public readonly string Name { get; }
+    public int Age { get; }
+    public Human4(string name, int age) 
+    {
+        Name = name;
+        Age = age;
+    }
+}
+static class Operators 
+{
+    public static int Add(int x, int y) => x + y;
+    public static int Substract(int x, int y) => x - y;
+    public static int Multiply(int x, int y) => x * y;
+}
+*/
+
+string? name = null;
+PrintUpper(name!);
+int? val = null;
+IsNull(val);
+val = 35;
+IsNull(val);
+PrintNullAble(null);
+PrintNullAble(25);
+
+void PrintUpper(string text) 
+{
+    if (text == null)WriteLine("null");
+    else WriteLine(text.ToUpper());
+}
+void IsNull(int? obj) 
+{
+    if (obj == null) WriteLine("Null");
+    else WriteLine(obj);
+}
+void PrintNullAble(int? number)
+{
+    if (number.HasValue) { WriteLine(number.Value); WriteLine(number); }
+    else WriteLine("null");
 }
