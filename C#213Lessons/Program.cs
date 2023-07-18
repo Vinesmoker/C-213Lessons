@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
+using System.Net.Security;
+using Newtonsoft.Json.Linq;
 
 /*
 WriteLine("Eter two numbers between 0 and 10 inclusive.\n");
@@ -464,7 +466,7 @@ static class Operators
     public static int Multiply(int x, int y) => x * y;
 }
 */
-
+/*
 string? name = null;
 PrintUpper(name!);
 int? val = null;
@@ -488,4 +490,125 @@ void PrintNullAble(int? number)
 {
     if (number.HasValue) { WriteLine(number.Value); WriteLine(number); }
     else WriteLine("null");
+}
+*/
+/*
+Message mes;
+Message? mes1;
+Message mes2;
+Message? mes3 = null;
+mes1 = Hello;
+mes = Hello;
+mes();
+mes += Welcome.Print;
+mes();
+mes += new Hello().Display;
+mes();
+mes2 = mes + mes1;
+mes2();
+mes.Invoke();
+Operation op = Add;
+int n = op.Invoke(44, 99);
+WriteLine(n);
+mes3?.Invoke();
+WriteLine("-------------------------");
+DoOperation(33, 67, Add);
+DoOperation(87, 35, Substruct);
+DoOperation(20, 44, Multiply);
+*/
+/*
+Operation operation = SelectOperation(OperationType.Add);
+WriteLine(operation(14, 8));
+
+operation = SelectOperation(OperationType.Substruct);
+WriteLine(operation(14, 9));
+
+operation = SelectOperation(OperationType.Multiply);
+WriteLine(operation(14, 10));
+
+Operation1 operation1 = SelectOperation1(OperationType1.Devide);
+WriteLine(operation1(14, 10));
+
+Operation SelectOperation(OperationType opType) 
+{
+    switch (opType) 
+    {
+        case OperationType.Add:return Add;
+        case OperationType.Substruct:return Substruct;
+        default:return Multiply;
+    }
+}
+Operation1 SelectOperation1(OperationType1 opType1)
+{ 
+    return Devide;
+}
+
+void Hello() => WriteLine("Hello world!");
+int Add(int x, int y) => x + y;
+int Substruct(int x, int y) => x - y;
+int Multiply(int x, int y) => x * y;
+double Devide(int x, int y) => x / y;
+void DoOperation(int a, int b, Operation op) 
+{
+    WriteLine(op(a, b));
+}
+enum OperationType1 { Devide}
+enum OperationType
+{ Add, Substruct, Multiply};
+delegate void Message();
+delegate int Operation(int x, int y);
+delegate double Operation1(int x, int y);
+*/
+
+Account account = new Account(200);
+account.RegisterHolder(PrintSimpleMessage);
+account.RegisterHolder(PrintCollorMessage);
+account.Take(100);
+account.Take(150);
+account.UnRegisterHolder(PrintCollorMessage);
+account.Take(50);
+
+void PrintSimpleMessage(string message) => WriteLine(message);
+void PrintCollorMessage(string message) 
+{
+    ForegroundColor = ConsoleColor.Red;
+    WriteLine(message);
+    ResetColor();
+}
+public delegate void AccountHolder(string message);
+public class Account 
+{
+    int sum;
+    AccountHolder? taken;
+    public Account(int sum) => this.sum = sum;
+    public void RegisterHolder(AccountHolder holder)
+    {
+        taken += holder;
+    }
+    public void UnRegisterHolder(AccountHolder holder)
+    {
+        taken -= holder;
+    }
+    public void Add(int sum) { this.sum += sum; }
+    public void Take(int sum) 
+    {
+        if (this.sum >= sum)
+        {
+            this.sum -= sum;
+            taken?.Invoke($"Со счета списано: {sum} у.е.");
+        }
+        else 
+        {
+            taken?.Invoke($"Недостаточно средств! Баланс: {this.sum} y.e.");
+        }
+    }
+}
+
+class Welcome
+{
+    public static void Print() => WriteLine("Welcome!");
+}
+class Hello 
+{
+    public void Display() => WriteLine("Hi!");
 }
