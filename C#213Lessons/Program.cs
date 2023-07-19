@@ -559,7 +559,7 @@ delegate void Message();
 delegate int Operation(int x, int y);
 delegate double Operation1(int x, int y);
 */
-
+/*
 Account account = new Account(200);
 account.RegisterHolder(PrintSimpleMessage);
 account.RegisterHolder(PrintCollorMessage);
@@ -612,3 +612,10 @@ class Hello
 {
     public void Display() => WriteLine("Hi!");
 }
+*/
+
+int x = Convert.ToInt32(ReadLine());
+int y = Convert.ToInt32(ReadLine());
+Func<int,int,int>sum = (x, y) => x + y;
+int res = sum(x, y);
+Console.WriteLine(res);
