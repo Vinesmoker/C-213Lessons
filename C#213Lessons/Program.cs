@@ -613,9 +613,118 @@ class Hello
     public void Display() => WriteLine("Hi!");
 }
 */
-
+/*
 int x = Convert.ToInt32(ReadLine());
 int y = Convert.ToInt32(ReadLine());
 Func<int,int,int>sum = (x, y) => x + y;
 int res = sum(x, y);
 Console.WriteLine(res);
+*/
+Account account = new Account(200);
+account.notify += DisplayMessage;
+/*account.RegisterHandler(PrintColorMessage);
+account.Take(100);
+account.Take(150);
+account.UnregisterHandler(PrintColorMessage);
+account.Take(50);*/
+account.Put(20);
+Console.WriteLine($"Сумма на счете: {account.Sum}");
+account.Take(70);
+Console.WriteLine($"Сумма на счете: {account.Sum}");
+account.Take(180);
+Console.WriteLine($"Сумма на счете: {account.Sum}");
+
+void PrintSimpleMessage(string message) => Console.WriteLine(message);
+void PrintColorMessage(string message)
+{
+Console.ForegroundColor = ConsoleColor.Red;
+Console.WriteLine(message);
+Console.ResetColor();
+}
+void DisplayMessage(Account sender, AccountEventArgs e)
+{
+Console.WriteLine($"Сумма транзакции: {e.Sum}");
+Console.WriteLine(e.Message);
+Console.WriteLine($"Текущая сумма на счете: {sender.Sum}");
+}
+class Account
+{
+    public delegate void AccountHandler(Account sender, AccountEventArgs e);
+    public event AccountHandler? notify;
+    /*public event AccountHandler Notify
+    {
+        add
+        {
+            notify = value;
+            Console.WriteLine($"{value.Method.Name} добавлен");
+        }
+        remove
+        {
+            notify -= value;
+            Console.WriteLine($"{value.Method.Name} удален");
+        }
+    }*/
+    public Account(int sum) => Sum = sum;
+    public int Sum { get; private set; }
+    public void Put(int sum)
+    {
+        Sum += sum;
+        notify?.Invoke(this, new AccountEventArgs($"На счет поступило: {sum}", sum));
+    }
+    public void Take(int sum)
+    {
+        if (Sum >= sum)
+        {
+            Sum -= sum;
+            notify?.Invoke(this, new AccountEventArgs($"Со счета снято: {sum}", sum));
+        }
+        else
+        {
+            notify?.Invoke(this, new AccountEventArgs($"Недостаточно денег на " +
+                $"счете. Текущий баланс: ", sum));
+        }
+    }
+    /*int sum;
+    AccountHandler? taken;
+    public Account(int sum)=>this.sum=sum;
+    public void RegisterHandler(AccountHandler handler)
+    {
+        taken += handler;
+    }
+    public void UnregisterHandler(AccountHandler handler)
+    {
+        taken-= handler;
+    }
+    public void Add(int sum) { this.sum+=sum; }
+    public void Take(int sum)
+    {
+        if (this.sum >= sum)
+        {
+            this.sum -= sum;
+            taken?.Invoke($"Со счета списано {sum} y.e.");
+        }
+        else
+        {
+            taken?.Invoke($"Недостаточно средств. Баланс: {this.sum} y.e.");
+        }
+                
+    }*/
+}
+class AccountEventArgs
+{
+    public string Message { get; }
+    public int Sum { get; }
+    public AccountEventArgs(string message, int sum)
+    {
+        Message = message;
+        Sum = sum;
+    }
+}
+class Welcome
+{
+    public static void Print() => Console.WriteLine("Welcome");
+}
+class Hello
+{
+    public void Display() => Console.WriteLine("Привет");
+}
